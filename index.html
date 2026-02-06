@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="TADA! Tuning Audio Diffusion Models through Activation Steering">
+  <meta name="description" content="Audio examples for TADA!, a method for steering audio diffusion models through activation manipulation.">
+  <meta name="keywords" content="audio generation, diffusion models, activation steering, text-to-audio, music generation">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="TADA! Tuning Audio Diffusion Models through Activation Steering">
+  <meta property="og:description" content="Audio examples for TADA!, a method for steering audio diffusion models through activation manipulation.">
+  <meta property="og:url" content="https://audio-steering.github.io">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="TADA! Tuning Audio Diffusion Models through Activation Steering">
+  <meta name="twitter:description" content="Audio examples for TADA!, a method for steering audio diffusion models through activation manipulation.">
+
+  <title>TADA! Tuning Audio Diffusion Models through Activation Steering</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="static/images/logo.jpg">
+
+  <!-- Critical CSS -->
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <!-- Non-critical CSS -->
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- JS -->
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+</head>
+<body>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <main id="main-content">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">TADA! Tuning Audio Diffusion Models through Activation Steering</h1>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><em>Steering Audio Examples</em></span>
+            </div>
+
+            <!-- <h2 class="subtitle is-4 has-text-centered" style="margin-top: 0.5rem; color: var(--text-secondary);">Steering Audio Examples</h2> -->
+
+          </div>
+        </div>
+        <div class="columns is-centered">
+          <div class="column is-four-fifths has-text-centered">
+            <img src="static/images/teaser.png" alt="TADA teaser: steering vectors applied to audio diffusion model attention layers to control attributes like tempo, mood, and timbre" style="max-width: 100%; border-radius: var(--border-radius-lg);">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Abstract -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Text-to-audio diffusion models have shown impressive capabilities in generating realistic audio from text descriptions, but they often lack fine-grained control over specific audio attributes. We present TADA (Tuning Audio Diffusion with Activation steering), a lightweight method for steering the generation process of pre-trained audio diffusion models by manipulating their internal activations. Our approach identifies concept-specific steering vectors from a small set of contrastive audio pairs and uses them to guide the diffusion process toward desired audio characteristics, such as the presence of specific instruments, vocal qualities, tempo, or mood, without retraining the model. We demonstrate that TADA enables continuous, fine-grained control over multiple audio attributes simultaneously, generalizes across diverse text prompts, and can be combined with existing text-to-audio models as a plug-and-play module. Extensive experiments show that our method achieves effective attribute control while preserving overall audio quality and text alignment.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Audio Examples -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Audio Examples</h2>
+      <p class="has-text-centered" style="margin-bottom: 2rem; color: var(--text-secondary);">
+        Use the slider to select a steering strength (&alpha;). For each prompt, compare the four approaches side by side.
+      </p>
+
+      <!-- Piano -->
+      <div class="concept-section">
+        <h3 class="title is-4 concept-title">
+          <span class="concept-icon"><i class="fas fa-music"></i></span>
+          Piano
+        </h3>
+
+        <div class="prompt-example" data-concept="piano" data-prompt="prompt_01">
+          <div class="prompt-text">"A melodic jazz piece with smooth rhythms"</div>
+          <div class="slider-row">
+            <span class="slider-label">&minus;&lambda;</span>
+            <input type="range" min="0" max="6" value="2" class="alpha-slider"
+              data-labels="-,-0.5 &middot;,0.0,+0.25 &middot;,0.5 &middot;,0.6 &middot;,+">
+            <span class="slider-label">+&lambda;</span>
+            <span class="alpha-display">No steering</span>
+          </div>
+          <div class="concept-range">no piano &larr; &rarr; piano</div>
+          <div class="approaches-row">
+            <div class="approach-card">
+              <div class="approach-label">CAA (All layers)</div>
+              <audio controls preload="none" data-approach="caa_all"
+                data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/piano/prompt_01/caa_all/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+            <div class="approach-card">
+              <div class="approach-label">CAA (layers w/o {6,7})</div>
+              <audio controls preload="none" data-approach="caa_wo_6_7"
+              data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/piano/prompt_01/caa_no_tf6tf7/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+            <div class="approach-card highlighted">
+              <div class="approach-label"><i class="fas fa-star highlight-star"></i> CAA (layers {6,7})</div>
+              <audio controls preload="none" data-approach="caa_6_7"
+                data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/piano/prompt_01/caa_tf6tf7/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+            <div class="approach-card highlighted">
+              <div class="approach-label"><i class="fas fa-star highlight-star"></i> SAE (layer {7})</div>
+              <audio controls preload="none" data-approach="sae_7"
+                data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/piano/prompt_01/sae_tf7/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+          </div>
+        </div>
+
+        <div class="prompt-example" data-concept="piano" data-prompt="prompt_02">
+          <div class="prompt-text">"Slow tempo, peaceful meditation soundscape with a soft violin"</div>
+          <div class="slider-row">
+            <span class="slider-label">&minus;&lambda;</span>
+            <input type="range" min="0" max="6" value="2" class="alpha-slider"
+              data-labels="-,-0.5 &middot;,0.0,+0.25 &middot;,0.5 &middot;,0.6 &middot;,+">
+            <span class="slider-label">+&lambda;</span>
+            <span class="alpha-display">No steering</span>
+          </div>
+          <div class="concept-range">no piano &larr; &rarr; piano</div>
+          <div class="approaches-row">
+            <div class="approach-card">
+              <div class="approach-label">CAA (All layers)</div>
+              <audio controls preload="none" data-approach="caa_all"
+                data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/piano/prompt_02/caa_all/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+            <div class="approach-card">
+              <div class="approach-label">CAA (layers w/o {6,7})</div>
+              <audio controls preload="none" data-approach="caa_wo_6_7"
+              data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/piano/prompt_02/caa_no_tf6tf7/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+            <div class="approach-card highlighted">
+              <div class="approach-label"><i class="fas fa-star highlight-star"></i> CAA (layers {6,7})</div>
+              <audio controls preload="none" data-approach="caa_6_7"
+                data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/piano/prompt_02/caa_tf6tf7/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+            <div class="approach-card highlighted">
+              <div class="approach-label"><i class="fas fa-star highlight-star"></i> SAE (layer {7})</div>
+              <audio controls preload="none" data-approach="sae_7"
+                data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/piano/prompt_02/sae_tf7/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tempo -->
+      <div class="concept-section">
+        <h3 class="title is-4 concept-title">
+          <span class="concept-icon"><i class="fas fa-tachometer-alt"></i></span>
+          Tempo
+        </h3>
+
+        <div class="prompt-example" data-concept="tempo" data-prompt="prompt_01">
+          <div class="prompt-text">"Cinematic soundtrack with dramatic tension"</div>
+          <div class="slider-row">
+            <span class="slider-label">&minus;&lambda;</span>
+            <input type="range" min="0" max="6" value="2" class="alpha-slider"
+              data-labels="-,-0.5 &middot;,0.0,+0.25 &middot;,0.5 &middot;,0.6 &middot;,+">
+            <span class="slider-label">+&lambda;</span>
+            <span class="alpha-display">No steering</span>
+          </div>
+          <div class="concept-range">slow &larr; &rarr; fast</div>
+          <div class="approaches-row">
+            <div class="approach-card">
+              <div class="approach-label">CAA (All layers)</div>
+              <audio controls preload="none" data-approach="caa_all"
+                data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/tempo/prompt_01/caa_all/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+            <div class="approach-card">
+              <div class="approach-label">CAA (layers w/o {6,7})</div>
+              <audio controls preload="none" data-approach="caa_wo_6_7"
+              data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/tempo/prompt_01/caa_no_tf6tf7/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+            <div class="approach-card highlighted">
+              <div class="approach-label"><i class="fas fa-star highlight-star"></i> CAA (layers {6,7})</div>
+              <audio controls preload="none" data-approach="caa_6_7"
+                data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/tempo/prompt_01/caa_tf6tf7/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+            <div class="approach-card highlighted">
+              <div class="approach-label"><i class="fas fa-star highlight-star"></i> SAE (layer {7})</div>
+              <audio controls preload="none" data-approach="sae_7"
+                data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/tempo/prompt_01/sae_tf7/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+          </div>
+        </div>
+
+        <div class="prompt-example" data-concept="tempo" data-prompt="prompt_02">
+          <div class="prompt-text">"Latin music with percussion and guitar"</div>
+          <div class="slider-row">
+            <span class="slider-label">&minus;&lambda;</span>
+            <input type="range" min="0" max="6" value="4" class="alpha-slider"
+              data-labels="-,-0.6 &middot;,-0.5 &middot;,-0.3 &middot;,0.0,+0.4 &middot;,+">
+            <span class="slider-label">+&lambda;</span>
+            <span class="alpha-display">No steering</span>
+          </div>
+          <div class="concept-range">slow &larr; &rarr; fast</div>
+          <div class="approaches-row">
+            <div class="approach-card">
+              <div class="approach-label">CAA (All layers)</div>
+              <audio controls preload="none" data-approach="caa_all"
+                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.5.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.4.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/tempo/prompt_02/caa_all/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+            <div class="approach-card">
+              <div class="approach-label">CAA (layers w/o {6,7})</div>
+              <audio controls preload="none" data-approach="caa_wo_6_7"
+                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.5.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.4.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/tempo/prompt_02/caa_no_tf6tf7/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+            <div class="approach-card highlighted">
+              <div class="approach-label"><i class="fas fa-star highlight-star"></i> CAA (layers {6,7})</div>
+              <audio controls preload="none" data-approach="caa_6_7"
+                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.5.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.4.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/tempo/prompt_02/caa_tf6tf7/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+            <div class="approach-card highlighted">
+              <div class="approach-label"><i class="fas fa-star highlight-star"></i> SAE (layer {7})</div>
+              <audio controls preload="none" data-approach="sae_7"
+                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.5.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.4.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/tempo/prompt_02/sae_tf7/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vocal Gender -->
+
+       <div class="concept-section">
+        <h3 class="title is-4 concept-title">
+          <span class="concept-icon"><i class="fas fa-microphone-alt"></i></span>
+          Vocal Gender
+        </h3>
+        <div class="prompt-example" data-concept="vocal" data-prompt="prompt_01">
+          <div class="prompt-text">"Pop song with catchy vocal melody and synth"</div>
+          <div class="slider-row">
+            <span class="slider-label">&minus;&lambda;</span>
+            <input type="range" min="0" max="6" value="3" class="alpha-slider"
+              data-labels="-,-0.6 &middot;,-0.3 &middot;,0.0,+0.3 &middot;,+0.6 &middot;,+">
+            <span class="slider-label">+&lambda;</span>
+            <span class="alpha-display">No steering</span>
+          </div>
+          <div class="concept-range">male &larr; &rarr; female</div>
+          <div class="approaches-row">
+            <div class="approach-card">
+              <div class="approach-label">CAA (All layers)</div>
+              <audio controls preload="none" data-approach="caa_all"
+                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.3.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/female_vocals/prompt_01/caa_all/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+            <div class="approach-card">
+              <div class="approach-label">CAA (layers w/o {6,7})</div>
+              <audio controls preload="none" data-approach="caa_wo_6_7"
+                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.3.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/female_vocals/prompt_01/caa_no_tf6tf7/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+            <div class="approach-card highlighted">
+              <div class="approach-label"><i class="fas fa-star highlight-star"></i> CAA (layers {6,7})</div>
+              <audio controls preload="none" data-approach="caa_6_7"
+                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.3.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/female_vocals/prompt_01/caa_tf6tf7/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+            <div class="approach-card highlighted">
+              <div class="approach-label"><i class="fas fa-star highlight-star"></i> SAE (layer {7})</div>
+              <audio controls preload="none" data-approach="sae_7"
+                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.3.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/female_vocals/prompt_01/sae_tf7/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+          </div>
+        </div>
+        <div class="prompt-example" data-concept="vocal" data-prompt="prompt_02">
+          <div class="prompt-text">"Rock anthem with powerful vocals and electric guitar"</div>
+          <div class="slider-row">
+            <span class="slider-label">&minus;&lambda;</span>
+            <input type="range" min="0" max="6" value="3" class="alpha-slider"
+              data-labels="-,-0.6 &middot;,-0.3 &middot;,0.0,+0.3 &middot;,+0.6 &middot;,+">
+            <span class="slider-label">+&lambda;</span>
+            <span class="alpha-display">No steering</span>
+          </div>
+          <div class="concept-range">male &larr; &rarr; female</div>
+          <div class="approaches-row">
+            <div class="approach-card">
+              <div class="approach-label">CAA (All layers)</div>
+              <audio controls preload="none" data-approach="caa_all"
+                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.3.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/female_vocals/prompt_02/caa_all/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+            <div class="approach-card">
+              <div class="approach-label">CAA (layers w/o {6,7})</div>
+              <audio controls preload="none" data-approach="caa_wo_6_7"
+                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.3.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/female_vocals/prompt_02/caa_no_tf6tf7/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+            <div class="approach-card highlighted">
+              <div class="approach-label"><i class="fas fa-star highlight-star"></i> CAA (layers {6,7})</div>
+              <audio controls preload="none" data-approach="caa_6_7"
+                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.3.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/female_vocals/prompt_02/caa_tf6tf7/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+            <div class="approach-card highlighted">
+              <div class="approach-label"><i class="fas fa-star highlight-star"></i> SAE (layer {7})</div>
+              <audio controls preload="none" data-approach="sae_7"
+                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.3.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
+                <source src="static/audio/female_vocals/prompt_02/sae_tf7/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            </div>
+          </div>
+        </div>
+
+      <!-- Mood -->
+      <!-- <div class="concept-section">
+        <h3 class="title is-4 concept-title">
+          <span class="concept-icon"><i class="fas fa-heart"></i></span>
+          Mood
+          <span class="concept-range">sad &larr; &rarr; happy</span>
+        </h3> -->
+
+    </div>
+  </section>
+
+  <!-- BibTeX -->
+  <!-- <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+          <i class="fas fa-copy"></i>
+          <span class="copy-text">Copy</span>
+        </button>
+      </div>
+      <pre id="bibtex-code"><code>@article{anonymous2025tada,
+  title={TADA! Tuning Audio Diffusion Models through Activation Steering},
+  author={Anonymous},
+  journal={Under Review},
+  year={2025}
+}</code></pre>
+    </div>
+  </section> -->
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+              This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
