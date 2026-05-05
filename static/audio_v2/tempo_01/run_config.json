@@ -1,0 +1,17 @@
+{
+  "concept": "tempo",
+  "raw_prompt": "Cinematic soundtrack with dramatic tension",
+  "generation_prompt": "a song, Cinematic soundtrack with dramatic tension",
+  "seed": 962,
+  "lyrics": "[inst]",
+  "methods": [
+    [
+      "CS",
+      "all"
+    ],
+    [
+      "CS",
+      "tf6tf7"
+    ]
+  ]
+}

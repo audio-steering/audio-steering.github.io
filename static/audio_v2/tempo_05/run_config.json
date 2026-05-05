@@ -1,0 +1,17 @@
+{
+  "concept": "tempo",
+  "raw_prompt": "classic 70s hard rock with overdriven guitar riffs, thunderous drums",
+  "generation_prompt": "a song, classic 70s hard rock with overdriven guitar riffs, thunderous drums",
+  "seed": 212,
+  "lyrics": "[inst]",
+  "methods": [
+    [
+      "CS",
+      "all"
+    ],
+    [
+      "CS",
+      "tf6tf7"
+    ]
+  ]
+}

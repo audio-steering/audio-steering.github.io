@@ -1,0 +1,17 @@
+{
+  "concept": "female_vocals",
+  "raw_prompt": "jazz trio with brushed drums, walking upright bass, and smoky piano",
+  "generation_prompt": "jazz trio with brushed drums, walking upright bass, and smoky piano, with clean vocal",
+  "seed": 801,
+  "lyrics": "Smoke curls slow in amber light,\nWhiskey warm and talking right,\nEvery note a secret told,\nTo a room that's never old.",
+  "methods": [
+    [
+      "CS",
+      "all"
+    ],
+    [
+      "CS",
+      "tf6tf7"
+    ]
+  ]
+}

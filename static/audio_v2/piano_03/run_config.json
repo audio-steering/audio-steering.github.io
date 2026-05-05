@@ -1,0 +1,17 @@
+{
+  "concept": "piano",
+  "raw_prompt": "Latin Spanish Music with subtle guitar",
+  "generation_prompt": "Latin Spanish Music with subtle guitar, with instrument",
+  "seed": 3,
+  "lyrics": "[inst]",
+  "methods": [
+    [
+      "CS",
+      "all"
+    ],
+    [
+      "CS",
+      "tf6tf7"
+    ]
+  ]
+}

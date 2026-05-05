@@ -1,0 +1,17 @@
+{
+  "concept": "piano",
+  "raw_prompt": "Melancholic jazz ballad with smooth saxophone, walking bassline, late night atmosphere",
+  "generation_prompt": "Melancholic jazz ballad with smooth saxophone, walking bassline, late night atmosphere, with instrument",
+  "seed": 99,
+  "lyrics": "[inst]",
+  "methods": [
+    [
+      "CS",
+      "all"
+    ],
+    [
+      "CS",
+      "tf6tf7"
+    ]
+  ]
+}

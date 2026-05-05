@@ -1,0 +1,17 @@
+{
+  "concept": "female_vocals",
+  "raw_prompt": "dark trap beat with deep 808s, eerie synth lead, and crisp hi-hats",
+  "generation_prompt": "dark trap beat with deep 808s, eerie synth lead, and crisp hi-hats, with clean vocal",
+  "seed": 2007,
+  "lyrics": "Shadows move when no one\\s home,\nRunning plays I wrote alone,\nCity sleeps but I don't rest,",
+  "methods": [
+    [
+      "CS",
+      "all"
+    ],
+    [
+      "CS",
+      "tf6tf7"
+    ]
+  ]
+}

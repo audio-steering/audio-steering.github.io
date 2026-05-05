@@ -1,0 +1,17 @@
+{
+  "concept": "female_vocals",
+  "raw_prompt": "Rock song with electric guitar",
+  "generation_prompt": "Rock song with electric guitar, with clean vocal",
+  "seed": 102,
+  "lyrics": "\nWe're standing on the edge of fire,\nHearts burning, reaching higher,\nNo chains can hold us down tonight,\nWe'll blaze through the dark and own the light.\n",
+  "methods": [
+    [
+      "CS",
+      "all"
+    ],
+    [
+      "CS",
+      "tf6tf7"
+    ]
+  ]
+}

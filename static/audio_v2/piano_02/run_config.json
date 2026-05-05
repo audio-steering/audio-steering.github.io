@@ -1,0 +1,17 @@
+{
+  "concept": "piano",
+  "raw_prompt": "calm coldplay style song with slight piano",
+  "generation_prompt": "calm coldplay style song with slight piano, with instrument",
+  "seed": 323,
+  "lyrics": "[inst]",
+  "methods": [
+    [
+      "CS",
+      "all"
+    ],
+    [
+      "CS",
+      "tf6tf7"
+    ]
+  ]
+}

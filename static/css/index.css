@@ -380,10 +380,19 @@ code {
 .concept-title {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.75rem;
-  padding-bottom: 1rem !important;
-  margin-bottom: 1.5rem !important;
+  padding-bottom: 0.75rem !important;
+  margin-bottom: 0.9rem !important;
   border-bottom: 2px solid var(--border-color);
+}
+
+.concept-title .concept-name {
+  margin-right: 0.5rem;
+}
+
+.concept-title .example-picker {
+  margin-left: auto;
 }
 
 /* Override the centered ::after pseudo-element for concept titles */
@@ -465,16 +474,22 @@ code {
   text-align: center;
 }
 
-/* Range slider styling */
+/* Range slider styling — pill track + purple thumb */
 .alpha-slider {
   -webkit-appearance: none;
   appearance: none;
   flex: 1;
-  height: 6px;
-  background: var(--border-color);
-  border-radius: 3px;
+  height: 14px;            /* full hit area; the visible track is drawn by the runnable-track */
+  background: transparent; /* let the runnable-track render the bar in WebKit */
   outline: none;
   cursor: pointer;
+}
+
+.alpha-slider::-webkit-slider-runnable-track {
+  height: 14px;
+  background: rgba(118, 75, 162, 0.18);
+  border-radius: 999px;
+  border: 1px solid rgba(118, 75, 162, 0.25);
 }
 
 .alpha-slider::-webkit-slider-thumb {
@@ -482,32 +497,35 @@ code {
   appearance: none;
   width: 22px;
   height: 22px;
-  background: var(--primary-color);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 50%;
   cursor: pointer;
   box-shadow: var(--shadow-md);
+  border: 2px solid white;
+  margin-top: -5px;         /* centers 22px thumb on 14px track */
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .alpha-slider::-webkit-slider-thumb:hover {
-  transform: scale(1.15);
+  transform: scale(1.12);
   box-shadow: var(--shadow-lg);
+}
+
+.alpha-slider::-moz-range-track {
+  height: 14px;
+  background: rgba(118, 75, 162, 0.18);
+  border-radius: 999px;
+  border: 1px solid rgba(118, 75, 162, 0.25);
 }
 
 .alpha-slider::-moz-range-thumb {
   width: 22px;
   height: 22px;
-  background: var(--primary-color);
-  border: none;
+  background: #764ba2;
+  border: 2px solid white;
   border-radius: 50%;
   cursor: pointer;
   box-shadow: var(--shadow-md);
-}
-
-.alpha-slider::-moz-range-track {
-  height: 6px;
-  background: var(--border-color);
-  border-radius: 3px;
 }
 
 /* Approaches row */
@@ -560,6 +578,448 @@ code {
 .approach-card audio {
   width: 100%;
   height: 36px;
+}
+
+
+/* ================================================
+   Steering Section (audio_v2)
+   ================================================ */
+
+.steer-section .concept-range {
+  text-align: center;
+  margin: 0.85rem 0 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-secondary);
+}
+
+.steer-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.example-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--background-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 0.4rem 0.75rem;
+  font-size: 0.9rem;
+}
+
+.example-picker-label {
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.example-select {
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  width: 17rem;            /* ~25 chars; truncates the closed-state label */
+  max-width: 60vw;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  outline: none;
+}
+
+.example-select:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.current-prompt {
+  position: relative;
+  flex: 1 1 100%;
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(240, 147, 251, 0.08) 100%);
+  border-left: 4px solid #764ba2;
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  padding: 0.85rem 1.1rem 0.85rem 2.75rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.current-prompt::before {
+  content: '“';
+  position: absolute;
+  left: 0.65rem;
+  top: 0.1rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 2.5rem;
+  line-height: 1;
+  color: #764ba2;
+  opacity: 0.7;
+}
+
+/* Main per-section audio player */
+.main-player {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Hide the native audio element — the custom UI drives it. */
+.section-audio {
+  display: none !important;
+}
+
+.player-play-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  padding: 0;
+  background: var(--gradient-primary);
+  color: white;
+  font-size: 1.05rem;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+.player-play-btn:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: var(--shadow-lg);
+  filter: brightness(1.06);
+}
+
+.player-play-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.player-play-btn .fa-play {
+  margin-left: 3px; /* optical centering for the FA fallback */
+}
+
+.player-play-btn .player-icon {
+  width: 1.4rem;
+  height: 1.4rem;
+  fill: currentColor;
+  display: block;
+}
+
+/* Optical centering nudge for the play (triangle) icon only. */
+.player-play-btn .player-icon.is-play {
+  margin-left: 2px;
+}
+
+.player-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.player-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.status-pill {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: white;
+  background: var(--gradient-primary);
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  letter-spacing: 0.03em;
+  box-shadow: var(--shadow-sm);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.player-time .time-sep {
+  color: var(--text-light);
+}
+
+.loop-icon {
+  margin-left: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--text-light);
+}
+
+.player-progress {
+  position: relative;
+  width: 100%;
+  height: 18px; /* generous hit target */
+  cursor: pointer;
+  touch-action: none;
+  display: flex;
+  align-items: center;
+}
+
+.player-progress:focus {
+  outline: none;
+}
+
+.player-progress:focus-visible .player-progress-track {
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.35);
+}
+
+.player-progress-track {
+  position: relative;
+  width: 100%;
+  height: 6px;
+  background: rgba(15, 23, 42, 0.1);
+  border-radius: 3px;
+  overflow: visible;
+}
+
+.player-progress-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0%;
+  background: var(--gradient-primary);
+  border-radius: 3px;
+  transition: width 0.08s linear;
+}
+
+.player-progress-thumb {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 14px;
+  height: 14px;
+  background: white;
+  border: 2px solid var(--primary-color);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: var(--shadow-sm);
+  opacity: 0;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  pointer-events: none;
+}
+
+.main-player:hover .player-progress-thumb,
+.player-progress:focus-visible .player-progress-thumb,
+.player-progress.is-dragging .player-progress-thumb {
+  opacity: 1;
+}
+
+.player-progress.is-dragging .player-progress-thumb {
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+/* Method rows */
+.method-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.method-group-header {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  padding: 0.1rem 0.25rem;
+  margin: 0;
+}
+
+.method-group-header-secondary {
+  margin-top: 0.5rem;
+  padding-top: 0.65rem;
+  border-top: 1px dashed var(--border-color);
+  color: #764ba2;
+}
+
+.method-row {
+  display: grid;
+  grid-template-columns: 9rem 1fr 6rem;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.65rem 1rem;
+  background: var(--background-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.method-row.active {
+  border-color: #764ba2;
+  background: linear-gradient(180deg, rgba(118, 75, 162, 0.07) 0%, var(--background-primary) 100%);
+  box-shadow: 0 0 0 1px rgba(118, 75, 162, 0.18);
+}
+
+.method-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+}
+
+.baseline-select {
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  background: var(--background-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.3rem 0.5rem;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  width: 100%;
+  min-width: 0;
+}
+
+.baseline-select:focus {
+  outline: 2px solid #764ba2;
+  outline-offset: 1px;
+}
+
+.method-row.active .baseline-select {
+  border-color: #764ba2;
+  color: #764ba2;
+  background: rgba(118, 75, 162, 0.06);
+}
+
+/* Subtle indication that the first row is the swappable one. */
+.method-row-baseline {
+  background: linear-gradient(180deg, rgba(118, 75, 162, 0.025) 0%, var(--background-primary) 100%);
+}
+
+.apply-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  font-size: 0.8rem;
+  background: var(--text-primary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.apply-btn .fa-play {
+  /* Optical centering — the play triangle reads off-center otherwise. */
+  margin-left: 2px;
+}
+
+.apply-btn:hover {
+  background: var(--primary-color);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.method-row.active .apply-btn {
+  background: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18), var(--shadow-md);
+}
+
+.method-row .alpha-slider {
+  width: 100%;
+}
+
+.method-row .alpha-display {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #764ba2;
+  background: rgba(118, 75, 162, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  text-align: center;
+  min-width: 5.25rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Per-slider direction caption */
+.slider-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.slider-wrap .alpha-slider {
+  width: 100%;
+}
+
+.slider-caption {
+  display: flex;
+  justify-content: space-between;
+  /* Inset roughly equal to the slider thumb's radius so the labels sit
+     under the slider track's effective travel range, not the input's box. */
+  padding: 0 0.45rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--text-light);
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.method-row.active .slider-caption {
+  color: #764ba2;
+}
+
+@media screen and (max-width: 640px) {
+  .method-row {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "name display"
+      "slider slider";
+    gap: 0.4rem 0.75rem;
+  }
+  .method-name { grid-area: name; }
+  .slider-wrap { grid-area: slider; }
+  .method-row .alpha-display { grid-area: display; justify-self: end; }
+
+  .example-select {
+    max-width: 100%;
+  }
 }
 
 

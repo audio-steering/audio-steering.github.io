@@ -1,0 +1,17 @@
+{
+  "concept": "tempo",
+  "raw_prompt": "Latin music with percussion and guitar",
+  "generation_prompt": "a song, Latin music with percussion and guitar",
+  "seed": 8901,
+  "lyrics": "[inst]",
+  "methods": [
+    [
+      "CS",
+      "all"
+    ],
+    [
+      "CS",
+      "tf6tf7"
+    ]
+  ]
+}

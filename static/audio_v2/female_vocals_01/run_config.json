@@ -1,0 +1,17 @@
+{
+  "concept": "female_vocals",
+  "raw_prompt": "slow tempo, peaceful meditation soundscape with a soft violin",
+  "generation_prompt": "slow tempo, peaceful meditation soundscape with a soft violin, with clean vocal",
+  "seed": 56348973,
+  "lyrics": "\nI met the love of my life in Rio,\nDancing to a song on the radio,\nShe took my hand in the afterglow,\nSaid don't you ever let me go.\n",
+  "methods": [
+    [
+      "CS",
+      "all"
+    ],
+    [
+      "CS",
+      "tf6tf7"
+    ]
+  ]
+}

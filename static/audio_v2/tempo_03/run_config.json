@@ -1,0 +1,17 @@
+{
+  "concept": "tempo",
+  "raw_prompt": "dramatic opera, lush orchestral strings, and swelling brass",
+  "generation_prompt": "a song, dramatic opera, lush orchestral strings, and swelling brass",
+  "seed": 21,
+  "lyrics": "[inst]",
+  "methods": [
+    [
+      "CS",
+      "all"
+    ],
+    [
+      "CS",
+      "tf6tf7"
+    ]
+  ]
+}

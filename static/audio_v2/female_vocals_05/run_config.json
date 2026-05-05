@@ -1,0 +1,17 @@
+{
+  "concept": "female_vocals",
+  "raw_prompt": "dreamy shoegaze with reverb-soaked guitars and hazy vocals",
+  "generation_prompt": "dreamy shoegaze with reverb-soaked guitars and hazy vocals, with clean vocal",
+  "seed": 908,
+  "lyrics": "Faded photographs of you,\nColors bleeding into blue,",
+  "methods": [
+    [
+      "CS",
+      "all"
+    ],
+    [
+      "CS",
+      "tf6tf7"
+    ]
+  ]
+}

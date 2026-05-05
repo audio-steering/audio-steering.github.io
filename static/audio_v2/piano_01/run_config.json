@@ -1,0 +1,17 @@
+{
+  "concept": "piano",
+  "raw_prompt": "Slow tempo, peaceful meditation soundscape with a soft violin",
+  "generation_prompt": "Slow tempo, peaceful meditation soundscape with a soft violin, with instrument",
+  "seed": 487,
+  "lyrics": "[inst]",
+  "methods": [
+    [
+      "CS",
+      "all"
+    ],
+    [
+      "CS",
+      "tf6tf7"
+    ]
+  ]
+}

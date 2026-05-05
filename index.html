@@ -75,7 +75,7 @@
         </div>
         <div class="columns is-centered">
           <div class="column is-four-fifths has-text-centered">
-            <img src="static/images/teaser.png" alt="TADA teaser: steering vectors applied to audio diffusion model attention layers to control attributes like tempo, mood, and timbre" style="max-width: 100%; border-radius: var(--border-radius-lg);">
+            <img src="static/images/teaser2.png" alt="TADA teaser: steering vectors applied to audio diffusion model attention layers to control attributes like tempo, mood, and timbre" style="max-width: 100%; border-radius: var(--border-radius-lg);">
           </div>
         </div>
       </div>
@@ -90,7 +90,7 @@
           <h2 class="title is-3">Abstract</h2>
           <div class="content has-text-justified">
             <p>
-              Text-to-audio diffusion models have shown impressive capabilities in generating realistic audio from text descriptions, but they often lack fine-grained control over specific audio attributes. We present TADA (Tuning Audio Diffusion with Activation steering), a lightweight method for steering the generation process of pre-trained audio diffusion models by manipulating their internal activations. Our approach identifies concept-specific steering vectors from a small set of contrastive audio pairs and uses them to guide the diffusion process toward desired audio characteristics, such as the presence of specific instruments, vocal qualities, tempo, or mood, without retraining the model. We demonstrate that TADA enables continuous, fine-grained control over multiple audio attributes simultaneously, generalizes across diverse text prompts, and can be combined with existing text-to-audio models as a plug-and-play module. Extensive experiments show that our method achieves effective attribute control while preserving overall audio quality and text alignment.
+              Audio diffusion models can synthesize high-fidelity music from text, yet achieving fine-grained control over specific musical attributes remains challenging, as their internal mechanisms for representing high-level concepts are poorly understood. In this work, we use activation patching to demonstrate that recent audio diffusion architectures exhibit a semantic bottleneck, where a small, shared subset of consecutive attention layers controls distinct musical concepts, such as the presence of specific instruments, vocals, or genres. Building on this, we systematically evaluate a broad spectrum of steering paradigms, comparing activation steering against prompt-level, score-space, and weight-space interventions, analyzing the interaction between the steering mechanism and the intervention site. Our new benchmark, supported by an extensive user study, demonstrates that localized activation steering establishes a new state-of-the-art in audio concept modulation.
             </p>
           </div>
         </div>
@@ -101,268 +101,277 @@
   <!-- Audio Examples -->
   <section class="section">
     <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">Audio Examples</h2>
+      <h2 class="title is-3 has-text-centered">Steering Audio Examples</h2>
       <p class="has-text-centered" style="margin-bottom: 2rem; color: var(--text-secondary);">
-        Use the slider to select a steering strength (&alpha;). For each prompt, compare the four approaches side by side.
+        Pick an example, then drag any method's slider to steer the audio in real time. The first row is a baseline picker &mdash; swap in different methods to compare against the localized variants.
       </p>
 
-      <!-- Piano -->
-      <div class="concept-section">
+      <!-- Steering Piano -->
+      <div class="concept-section steer-section" data-concept="piano">
         <h3 class="title is-4 concept-title">
           <span class="concept-icon"><i class="fas fa-music"></i></span>
-          Piano
+          <span class="concept-name">Steering Piano</span>
+          <label class="example-picker">
+            <span class="example-picker-label">Example</span>
+            <select class="example-select">
+              <option value="piano_01" data-prompt="Slow tempo, peaceful meditation soundscape with a soft violin">1 &mdash; Slow tempo, peaceful meditation soundscape with a soft violin</option>
+              <option value="piano_02" data-prompt="Calm Coldplay-style song with slight piano">2 &mdash; Calm Coldplay-style song with slight piano</option>
+              <option value="piano_03" data-prompt="Latin Spanish music with subtle guitar">3 &mdash; Latin Spanish music with subtle guitar</option>
+              <option value="piano_04" data-prompt="Melancholic jazz ballad with smooth saxophone, walking bassline, late-night atmosphere">4 &mdash; Melancholic jazz ballad with smooth saxophone</option>
+              <option value="piano_05" data-prompt="Slow tempo, peaceful meditation soundscape with a soft violin (v2)">5 &mdash; Slow tempo, peaceful meditation soundscape (v2)</option>
+            </select>
+          </label>
         </h3>
+        <div class="steer-header">
+          <div class="prompt-text current-prompt"></div>
+        </div>
 
-        <div class="prompt-example" data-concept="piano" data-prompt="prompt_01">
-          <div class="prompt-text">"A melodic jazz piece with smooth rhythms"</div>
-          <div class="slider-row">
-            <span class="slider-label">&minus;&lambda;</span>
-            <input type="range" min="0" max="6" value="2" class="alpha-slider"
-              data-labels="-,-0.5 &middot;,0.0,+0.25 &middot;,0.5 &middot;,0.6 &middot;,+">
-            <span class="slider-label">+&lambda;</span>
-            <span class="alpha-display">No steering</span>
-          </div>
-          <div class="concept-range">no piano &larr; &rarr; piano</div>
-          <div class="approaches-row">
-            <div class="approach-card">
-              <div class="approach-label">CAA (All layers)</div>
-              <audio controls preload="none" data-approach="caa_all"
-                data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/piano/prompt_01/caa_all/alpha_0.0.mp3" type="audio/mpeg"></audio>
+        <div class="main-player">
+          <button type="button" class="player-play-btn" aria-label="Play / pause">
+            <i class="fas fa-play" aria-hidden="true"></i>
+          </button>
+          <div class="player-body">
+            <div class="player-info">
+              <span class="status-pill">Baseline &middot; &alpha; = 0</span>
+              <span class="player-time">
+                <span class="time-current">0:00</span>
+                <span class="time-sep">/</span>
+                <span class="time-total">0:00</span>
+                <i class="fas fa-repeat loop-icon" aria-label="looping" title="Looping"></i>
+              </span>
             </div>
-            <div class="approach-card">
-              <div class="approach-label">CAA (layers w/o {7,8})</div>
-              <audio controls preload="none" data-approach="caa_wo_6_7"
-              data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/piano/prompt_01/caa_no_tf7tf8/alpha_0.0.mp3" type="audio/mpeg"></audio>
-            </div>
-            <div class="approach-card highlighted">
-              <div class="approach-label"><i class="fas fa-star highlight-star"></i> CAA (layers {7,8})</div>
-              <audio controls preload="none" data-approach="caa_6_7"
-                data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/piano/prompt_01/caa_tf7tf8/alpha_0.0.mp3" type="audio/mpeg"></audio>
-            </div>
-            <div class="approach-card highlighted">
-              <div class="approach-label"><i class="fas fa-star highlight-star"></i> SAE (layers {7,8})</div>
-              <audio controls preload="none" data-approach="sae_7"
-                data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/piano/prompt_01/sae_tf7tf8/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            <div class="player-progress" role="slider" aria-label="Seek" tabindex="0">
+              <div class="player-progress-track">
+                <div class="player-progress-fill"></div>
+                <div class="player-progress-thumb"></div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="prompt-example" data-concept="piano" data-prompt="prompt_02">
-          <div class="prompt-text">"Slow tempo, peaceful meditation soundscape with a soft violin"</div>
-          <div class="slider-row">
-            <span class="slider-label">&minus;&lambda;</span>
-            <input type="range" min="0" max="6" value="2" class="alpha-slider"
-              data-labels="-,-0.5 &middot;,0.0,+0.25 &middot;,0.5 &middot;,0.6 &middot;,+">
-            <span class="slider-label">+&lambda;</span>
-            <span class="alpha-display">No steering</span>
+        <div class="method-rows">
+          <div class="method-group-header">Baselines</div>
+          <div class="method-row method-row-baseline" data-method="PI_all">
+            <select class="baseline-select method-name" aria-label="Baseline method">
+              <option value="PI_all">PCI</option>
+              <option value="TextEmb_all">Text Emb.</option>
+              <option value="TokEmb_all">Token Emb.</option>
+              <option value="CS_all">Concept Sliders</option>
+              <option value="FreeSliders_all">FreeSliders</option>
+              <option value="AUSteer_all">AUSteer</option>
+              <option value="CAA_all">CAA</option>
+            </select>
+            <div class="slider-wrap">
+              <input type="range" class="alpha-slider" min="-3" max="3" step="1" value="0" aria-label="Baseline alpha">
+              <div class="slider-caption"><span>&larr; less piano</span><span>more piano &rarr;</span></div>
+            </div>
+            <span class="alpha-display">&alpha; = 0</span>
           </div>
-          <div class="concept-range">no piano &larr; &rarr; piano</div>
-          <div class="approaches-row">
-            <div class="approach-card">
-              <div class="approach-label">CAA (All layers)</div>
-              <audio controls preload="none" data-approach="caa_all"
-                data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/piano/prompt_02/caa_all/alpha_0.0.mp3" type="audio/mpeg"></audio>
+          <div class="method-group-header method-group-header-secondary">Our localized</div>
+          <div class="method-row" data-method="AUSteer_tf6tf7">
+            <div class="method-name">AUSteer (loc.)</div>
+            <div class="slider-wrap">
+              <input type="range" class="alpha-slider" min="-3" max="3" step="1" value="0" aria-label="AUSteer (loc.) alpha">
+              <div class="slider-caption"><span>&larr; less piano</span><span>more piano &rarr;</span></div>
             </div>
-            <div class="approach-card">
-              <div class="approach-label">CAA (layers w/o {7,8})</div>
-              <audio controls preload="none" data-approach="caa_wo_6_7"
-              data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/piano/prompt_02/caa_no_tf7tf8/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            <span class="alpha-display">&alpha; = 0</span>
+          </div>
+          <div class="method-row" data-method="CAA_tf6tf7">
+            <div class="method-name">CAA (loc.)</div>
+            <div class="slider-wrap">
+              <input type="range" class="alpha-slider" min="-3" max="3" step="1" value="0" aria-label="CAA (loc.) alpha">
+              <div class="slider-caption"><span>&larr; less piano</span><span>more piano &rarr;</span></div>
             </div>
-            <div class="approach-card highlighted">
-              <div class="approach-label"><i class="fas fa-star highlight-star"></i> CAA (layers {7,8})</div>
-              <audio controls preload="none" data-approach="caa_6_7"
-                data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/piano/prompt_02/caa_tf7tf8/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            <span class="alpha-display">&alpha; = 0</span>
+          </div>
+          <div class="method-row" data-method="SAE_tf6tf7">
+            <div class="method-name">SAE (loc.)</div>
+            <div class="slider-wrap">
+              <input type="range" class="alpha-slider" min="-3" max="3" step="1" value="0" aria-label="SAE (loc.) alpha">
+              <div class="slider-caption"><span>&larr; less piano</span><span>more piano &rarr;</span></div>
             </div>
-            <div class="approach-card highlighted">
-              <div class="approach-label"><i class="fas fa-star highlight-star"></i> SAE (layers {7,8})</div>
-              <audio controls preload="none" data-approach="sae_7"
-                data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/piano/prompt_02/sae_tf7tf8/alpha_0.0.mp3" type="audio/mpeg"></audio>
-            </div>
+            <span class="alpha-display">&alpha; = 0</span>
           </div>
         </div>
       </div>
 
-      <!-- Tempo -->
-      <div class="concept-section">
-        <h3 class="title is-4 concept-title">
-          <span class="concept-icon"><i class="fas fa-tachometer-alt"></i></span>
-          Tempo
-        </h3>
-
-        <div class="prompt-example" data-concept="tempo" data-prompt="prompt_01">
-          <div class="prompt-text">"Cinematic soundtrack with dramatic tension"</div>
-          <div class="slider-row">
-            <span class="slider-label">&minus;&lambda;</span>
-            <input type="range" min="0" max="6" value="2" class="alpha-slider"
-              data-labels="-,-0.5 &middot;,0.0,+0.25 &middot;,0.5 &middot;,0.6 &middot;,+">
-            <span class="slider-label">+&lambda;</span>
-            <span class="alpha-display">No steering</span>
-          </div>
-          <div class="concept-range">slow &larr; &rarr; fast</div>
-          <div class="approaches-row">
-            <div class="approach-card">
-              <div class="approach-label">CAA (All layers)</div>
-              <audio controls preload="none" data-approach="caa_all"
-                data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/tempo/prompt_01/caa_all/alpha_0.0.mp3" type="audio/mpeg"></audio>
-            </div>
-            <div class="approach-card">
-              <div class="approach-label">CAA (layers w/o {7,8})</div>
-              <audio controls preload="none" data-approach="caa_wo_6_7"
-              data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/tempo/prompt_01/caa_no_tf7tf8/alpha_0.0.mp3" type="audio/mpeg"></audio>
-            </div>
-            <div class="approach-card highlighted">
-              <div class="approach-label"><i class="fas fa-star highlight-star"></i> CAA (layers {7,8})</div>
-              <audio controls preload="none" data-approach="caa_6_7"
-                data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/tempo/prompt_01/caa_tf7tf8/alpha_0.0.mp3" type="audio/mpeg"></audio>
-            </div>
-            <div class="approach-card highlighted">
-              <div class="approach-label"><i class="fas fa-star highlight-star"></i> SAE (layers {7,8})</div>
-              <audio controls preload="none" data-approach="sae_7"
-                data-steps="alpha_-1.0.mp3,alpha_-0.5.mp3,alpha_0.0.mp3,alpha_+0.25.mp3,alpha_+0.5.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/tempo/prompt_01/sae_tf7tf8/alpha_0.0.mp3" type="audio/mpeg"></audio>
-            </div>
-          </div>
-        </div>
-
-        <div class="prompt-example" data-concept="tempo" data-prompt="prompt_02">
-          <div class="prompt-text">"Latin music with percussion and guitar"</div>
-          <div class="slider-row">
-            <span class="slider-label">&minus;&lambda;</span>
-            <input type="range" min="0" max="6" value="4" class="alpha-slider"
-              data-labels="-,-0.6 &middot;,-0.5 &middot;,-0.3 &middot;,0.0,+0.4 &middot;,+">
-            <span class="slider-label">+&lambda;</span>
-            <span class="alpha-display">No steering</span>
-          </div>
-          <div class="concept-range">slow &larr; &rarr; fast</div>
-          <div class="approaches-row">
-            <div class="approach-card">
-              <div class="approach-label">CAA (All layers)</div>
-              <audio controls preload="none" data-approach="caa_all"
-                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.5.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.4.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/tempo/prompt_02/caa_all/alpha_0.0.mp3" type="audio/mpeg"></audio>
-            </div>
-            <div class="approach-card">
-              <div class="approach-label">CAA (layers w/o {7,8})</div>
-              <audio controls preload="none" data-approach="caa_wo_6_7"
-                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.5.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.4.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/tempo/prompt_02/caa_no_tf7tf8/alpha_0.0.mp3" type="audio/mpeg"></audio>
-            </div>
-            <div class="approach-card highlighted">
-              <div class="approach-label"><i class="fas fa-star highlight-star"></i> CAA (layers {7,8})</div>
-              <audio controls preload="none" data-approach="caa_6_7"
-                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.5.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.4.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/tempo/prompt_02/caa_tf7tf8/alpha_0.0.mp3" type="audio/mpeg"></audio>
-            </div>
-            <div class="approach-card highlighted">
-              <div class="approach-label"><i class="fas fa-star highlight-star"></i> SAE (layers {7,8})</div>
-              <audio controls preload="none" data-approach="sae_7"
-                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.5.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.4.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/tempo/prompt_02/sae_tf7tf8/alpha_0.0.mp3" type="audio/mpeg"></audio>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Vocal Gender -->
-
-       <div class="concept-section">
+      <!-- Steering Vocal Gender -->
+      <div class="concept-section steer-section" data-concept="female_vocals">
         <h3 class="title is-4 concept-title">
           <span class="concept-icon"><i class="fas fa-microphone-alt"></i></span>
-          Vocal Gender
+          <span class="concept-name">Steering Vocal Gender</span>
+          <label class="example-picker">
+            <span class="example-picker-label">Example</span>
+            <select class="example-select">
+              <option value="female_vocals_01" data-prompt="Slow tempo, peaceful meditation soundscape with a soft violin">1 &mdash; Slow tempo, peaceful meditation soundscape with a soft violin</option>
+              <option value="female_vocals_02" data-prompt="Rock song with electric guitar">2 &mdash; Rock song with electric guitar</option>
+              <option value="female_vocals_03" data-prompt="Jazz trio with brushed drums, walking upright bass, and smoky piano">3 &mdash; Jazz trio with brushed drums, walking upright bass, and smoky piano</option>
+              <option value="female_vocals_04" data-prompt="Dark trap beat with deep 808s, eerie synth lead, and crisp hi-hats">4 &mdash; Dark trap beat with deep 808s, eerie synth lead, and crisp hi-hats</option>
+              <option value="female_vocals_05" data-prompt="Dreamy shoegaze with reverb-soaked guitars and hazy vocals">5 &mdash; Dreamy shoegaze with reverb-soaked guitars and hazy vocals</option>
+            </select>
+          </label>
         </h3>
-        <div class="prompt-example" data-concept="vocal" data-prompt="prompt_01">
-          <div class="prompt-text">"Pop song with catchy vocal melody and synth"</div>
-          <div class="slider-row">
-            <span class="slider-label">&minus;&lambda;</span>
-            <input type="range" min="0" max="6" value="3" class="alpha-slider"
-              data-labels="-,-0.6 &middot;,-0.3 &middot;,0.0,+0.3 &middot;,+0.6 &middot;,+">
-            <span class="slider-label">+&lambda;</span>
-            <span class="alpha-display">No steering</span>
-          </div>
-          <div class="concept-range">male &larr; &rarr; female</div>
-          <div class="approaches-row">
-            <div class="approach-card">
-              <div class="approach-label">CAA (All layers)</div>
-              <audio controls preload="none" data-approach="caa_all"
-                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.3.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/female_vocals/prompt_01/caa_all/alpha_0.0.mp3" type="audio/mpeg"></audio>
-            </div>
-            <div class="approach-card">
-              <div class="approach-label">CAA (layers w/o {7,8})</div>
-              <audio controls preload="none" data-approach="caa_wo_6_7"
-                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.3.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/female_vocals/prompt_01/caa_no_tf7tf8/alpha_0.0.mp3" type="audio/mpeg"></audio>
-            </div>
-            <div class="approach-card highlighted">
-              <div class="approach-label"><i class="fas fa-star highlight-star"></i> CAA (layers {7,8})</div>
-              <audio controls preload="none" data-approach="caa_6_7"
-                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.3.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/female_vocals/prompt_01/caa_tf7tf8/alpha_0.0.mp3" type="audio/mpeg"></audio>
-            </div>
-            <div class="approach-card highlighted">
-              <div class="approach-label"><i class="fas fa-star highlight-star"></i> SAE (layers {7,8})</div>
-              <audio controls preload="none" data-approach="sae_7"
-                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.3.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/female_vocals/prompt_01/sae_tf7tf8/alpha_0.0.mp3" type="audio/mpeg"></audio>
-            </div>
-          </div>
+        <div class="steer-header">
+          <div class="prompt-text current-prompt"></div>
         </div>
-        <div class="prompt-example" data-concept="vocal" data-prompt="prompt_02">
-          <div class="prompt-text">"Rock anthem with powerful vocals and electric guitar"</div>
-          <div class="slider-row">
-            <span class="slider-label">&minus;&lambda;</span>
-            <input type="range" min="0" max="6" value="3" class="alpha-slider"
-              data-labels="-,-0.6 &middot;,-0.3 &middot;,0.0,+0.3 &middot;,+0.6 &middot;,+">
-            <span class="slider-label">+&lambda;</span>
-            <span class="alpha-display">No steering</span>
-          </div>
-          <div class="concept-range">male &larr; &rarr; female</div>
-          <div class="approaches-row">
-            <div class="approach-card">
-              <div class="approach-label">CAA (All layers)</div>
-              <audio controls preload="none" data-approach="caa_all"
-                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.3.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/female_vocals/prompt_02/caa_all/alpha_0.0.mp3" type="audio/mpeg"></audio>
+
+        <div class="main-player">
+          <button type="button" class="player-play-btn" aria-label="Play / pause">
+            <i class="fas fa-play" aria-hidden="true"></i>
+          </button>
+          <div class="player-body">
+            <div class="player-info">
+              <span class="status-pill">Baseline &middot; &alpha; = 0</span>
+              <span class="player-time">
+                <span class="time-current">0:00</span>
+                <span class="time-sep">/</span>
+                <span class="time-total">0:00</span>
+                <i class="fas fa-repeat loop-icon" aria-label="looping" title="Looping"></i>
+              </span>
             </div>
-            <div class="approach-card">
-              <div class="approach-label">CAA (layers w/o {7,8})</div>
-              <audio controls preload="none" data-approach="caa_wo_6_7"
-                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.3.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/female_vocals/prompt_02/caa_no_tf7tf8/alpha_0.0.mp3" type="audio/mpeg"></audio>
-            </div>
-            <div class="approach-card highlighted">
-              <div class="approach-label"><i class="fas fa-star highlight-star"></i> CAA (layers {7,8})</div>
-              <audio controls preload="none" data-approach="caa_6_7"
-                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.3.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/female_vocals/prompt_02/caa_tf7tf8/alpha_0.0.mp3" type="audio/mpeg"></audio>
-            </div>
-            <div class="approach-card highlighted">
-              <div class="approach-label"><i class="fas fa-star highlight-star"></i> SAE (layers {7,8})</div>
-              <audio controls preload="none" data-approach="sae_7"
-                data-steps="alpha_-1.0.mp3,alpha_-0.6.mp3,alpha_-0.3.mp3,alpha_0.0.mp3,alpha_+0.3.mp3,alpha_+0.6.mp3,alpha_+1.0.mp3">
-                <source src="static/audio/female_vocals/prompt_02/sae_tf7tf8/alpha_0.0.mp3" type="audio/mpeg"></audio>
+            <div class="player-progress" role="slider" aria-label="Seek" tabindex="0">
+              <div class="player-progress-track">
+                <div class="player-progress-fill"></div>
+                <div class="player-progress-thumb"></div>
+              </div>
             </div>
           </div>
         </div>
 
-      <!-- Mood -->
-      <!-- <div class="concept-section">
+        <div class="method-rows">
+          <div class="method-group-header">Baselines</div>
+          <div class="method-row method-row-baseline" data-method="PI_all">
+            <select class="baseline-select method-name" aria-label="Baseline method">
+              <option value="PI_all">PCI</option>
+              <option value="TextEmb_all">Text Emb.</option>
+              <option value="TokEmb_all">Token Emb.</option>
+              <option value="CS_all">Concept Sliders</option>
+              <option value="FreeSliders_all">FreeSliders</option>
+              <option value="AUSteer_all">AUSteer</option>
+              <option value="CAA_all">CAA</option>
+            </select>
+            <div class="slider-wrap">
+              <input type="range" class="alpha-slider" min="-3" max="3" step="1" value="0" aria-label="Baseline alpha">
+              <div class="slider-caption"><span>&larr; male</span><span>female &rarr;</span></div>
+            </div>
+            <span class="alpha-display">&alpha; = 0</span>
+          </div>
+          <div class="method-group-header method-group-header-secondary">Our localized</div>
+          <div class="method-row" data-method="AUSteer_tf6tf7">
+            <div class="method-name">AUSteer (loc.)</div>
+            <div class="slider-wrap">
+              <input type="range" class="alpha-slider" min="-3" max="3" step="1" value="0" aria-label="AUSteer (loc.) alpha">
+              <div class="slider-caption"><span>&larr; male</span><span>female &rarr;</span></div>
+            </div>
+            <span class="alpha-display">&alpha; = 0</span>
+          </div>
+          <div class="method-row" data-method="CAA_tf6tf7">
+            <div class="method-name">CAA (loc.)</div>
+            <div class="slider-wrap">
+              <input type="range" class="alpha-slider" min="-3" max="3" step="1" value="0" aria-label="CAA (loc.) alpha">
+              <div class="slider-caption"><span>&larr; male</span><span>female &rarr;</span></div>
+            </div>
+            <span class="alpha-display">&alpha; = 0</span>
+          </div>
+          <div class="method-row" data-method="SAE_tf6tf7">
+            <div class="method-name">SAE (loc.)</div>
+            <div class="slider-wrap">
+              <input type="range" class="alpha-slider" min="-3" max="3" step="1" value="0" aria-label="SAE (loc.) alpha">
+              <div class="slider-caption"><span>&larr; male</span><span>female &rarr;</span></div>
+            </div>
+            <span class="alpha-display">&alpha; = 0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Steering Tempo -->
+      <div class="concept-section steer-section" data-concept="tempo">
         <h3 class="title is-4 concept-title">
-          <span class="concept-icon"><i class="fas fa-heart"></i></span>
-          Mood
-          <span class="concept-range">sad &larr; &rarr; happy</span>
-        </h3> -->
+          <span class="concept-icon"><i class="fas fa-tachometer-alt"></i></span>
+          <span class="concept-name">Steering Tempo</span>
+          <label class="example-picker">
+            <span class="example-picker-label">Example</span>
+            <select class="example-select">
+              <option value="tempo_01" data-prompt="Cinematic soundtrack with dramatic tension">1 &mdash; Cinematic soundtrack with dramatic tension</option>
+              <option value="tempo_02" data-prompt="Latin music with percussion and guitar">2 &mdash; Latin music with percussion and guitar</option>
+              <option value="tempo_03" data-prompt="Dramatic opera, lush orchestral strings, and swelling brass">3 &mdash; Dramatic opera, lush orchestral strings, and swelling brass</option>
+              <option value="tempo_04" data-prompt="A reggae song, offbeat guitar, warm bassline, one-drop drums, and bright horn">4 &mdash; A reggae song, offbeat guitar, warm bassline, one-drop drums, and bright horn</option>
+              <option value="tempo_05" data-prompt="Classic 70s hard rock with overdriven guitar riffs, thunderous drums">5 &mdash; Classic 70s hard rock with overdriven guitar riffs, thunderous drums</option>
+            </select>
+          </label>
+        </h3>
+        <div class="steer-header">
+          <div class="prompt-text current-prompt"></div>
+        </div>
+
+        <div class="main-player">
+          <button type="button" class="player-play-btn" aria-label="Play / pause">
+            <i class="fas fa-play" aria-hidden="true"></i>
+          </button>
+          <div class="player-body">
+            <div class="player-info">
+              <span class="status-pill">Baseline &middot; &alpha; = 0</span>
+              <span class="player-time">
+                <span class="time-current">0:00</span>
+                <span class="time-sep">/</span>
+                <span class="time-total">0:00</span>
+                <i class="fas fa-repeat loop-icon" aria-label="looping" title="Looping"></i>
+              </span>
+            </div>
+            <div class="player-progress" role="slider" aria-label="Seek" tabindex="0">
+              <div class="player-progress-track">
+                <div class="player-progress-fill"></div>
+                <div class="player-progress-thumb"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="method-rows">
+          <div class="method-group-header">Baselines</div>
+          <div class="method-row method-row-baseline" data-method="PI_all">
+            <select class="baseline-select method-name" aria-label="Baseline method">
+              <option value="PI_all">PCI</option>
+              <option value="TextEmb_all">Text Emb.</option>
+              <option value="TokEmb_all">Token Emb.</option>
+              <option value="CS_all">Concept Sliders</option>
+              <option value="FreeSliders_all">FreeSliders</option>
+              <option value="AUSteer_all">AUSteer</option>
+              <option value="CAA_all">CAA</option>
+            </select>
+            <div class="slider-wrap">
+              <input type="range" class="alpha-slider" min="-3" max="3" step="1" value="0" aria-label="Baseline alpha">
+              <div class="slider-caption"><span>&larr; slower</span><span>faster &rarr;</span></div>
+            </div>
+            <span class="alpha-display">&alpha; = 0</span>
+          </div>
+          <div class="method-group-header method-group-header-secondary">Our localized</div>
+          <div class="method-row" data-method="AUSteer_tf6tf7">
+            <div class="method-name">AUSteer (loc.)</div>
+            <div class="slider-wrap">
+              <input type="range" class="alpha-slider" min="-3" max="3" step="1" value="0" aria-label="AUSteer (loc.) alpha">
+              <div class="slider-caption"><span>&larr; slower</span><span>faster &rarr;</span></div>
+            </div>
+            <span class="alpha-display">&alpha; = 0</span>
+          </div>
+          <div class="method-row" data-method="CAA_tf6tf7">
+            <div class="method-name">CAA (loc.)</div>
+            <div class="slider-wrap">
+              <input type="range" class="alpha-slider" min="-3" max="3" step="1" value="0" aria-label="CAA (loc.) alpha">
+              <div class="slider-caption"><span>&larr; slower</span><span>faster &rarr;</span></div>
+            </div>
+            <span class="alpha-display">&alpha; = 0</span>
+          </div>
+          <div class="method-row" data-method="SAE_tf6tf7">
+            <div class="method-name">SAE (loc.)</div>
+            <div class="slider-wrap">
+              <input type="range" class="alpha-slider" min="-3" max="3" step="1" value="0" aria-label="SAE (loc.) alpha">
+              <div class="slider-caption"><span>&larr; slower</span><span>faster &rarr;</span></div>
+            </div>
+            <span class="alpha-display">&alpha; = 0</span>
+          </div>
+        </div>
+      </div>
 
     </div>
   </section>

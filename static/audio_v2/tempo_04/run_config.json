@@ -1,0 +1,17 @@
+{
+  "concept": "tempo",
+  "raw_prompt": "a reggae song, offbeat guitar, warm bassline, one-drop drums, and bright horn",
+  "generation_prompt": "a song, a reggae song, offbeat guitar, warm bassline, one-drop drums, and bright horn",
+  "seed": 77,
+  "lyrics": "[inst]",
+  "methods": [
+    [
+      "CS",
+      "all"
+    ],
+    [
+      "CS",
+      "tf6tf7"
+    ]
+  ]
+}
