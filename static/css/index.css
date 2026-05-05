@@ -868,6 +868,7 @@ code {
   color: #764ba2;
 }
 
+
 .method-row {
   display: grid;
   grid-template-columns: 9rem 1fr 6rem;
